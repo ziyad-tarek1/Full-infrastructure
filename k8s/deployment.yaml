@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-app-deployment
+  namespace: default  # Make sure the namespace matches your setup
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todo-app
+  template:
+    metadata:
+      labels:
+        app: todo-app
+    spec:
+     # serviceAccountName: myapp  # Ensure the correct service account is used
+      containers:
+      - name: todo-app
+        image: docker.io/ziyadtarek99/todopy:v1  # Replace with your Docker image
+        ports:
+        - containerPort: 5000
+        env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: rds-credentials-secret  # Matches the secret synced from AWS Secrets Manager
+                key: endpointurl             # Matches the key in your SecretProviderClass
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: rds-credentials-secret
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: rds-credentials-secret
+                key: password
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: rds-credentials-secret
+                key: db_name  # Dynamically fetch database name from the synced secret
+
