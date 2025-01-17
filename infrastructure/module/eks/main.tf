@@ -355,11 +355,11 @@ data "aws_iam_policy_document" "myapp_secrets" {
       variable = "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:sub"
       values   = ["system:serviceaccount:default:myapp"]  /// "system:serviceaccount:namespace:service-account-name"
     }
- /*   condition {
+    condition {
       test     = "StringEquals"
       variable = "${replace(aws_iam_openid_connect_provider.eks.url, "https://", "")}:aud"
       values   = ["sts.amazonaws.com"]
-    }*/
+    }
     principals {
       identifiers = [aws_iam_openid_connect_provider.eks.arn]
       type        = "Federated"

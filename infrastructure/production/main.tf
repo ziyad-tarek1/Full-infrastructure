@@ -152,7 +152,7 @@ module "prometheus" {
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-/*module "argocd" {
+module "argocd" {
   source                         = "../module/app"  
   app_name                       = "argocd" 
   namespace                      = "argocd"
@@ -183,10 +183,10 @@ module "elk_stack" {
 }
 
 
-*/
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*module "canary" {
+module "canary" {
     source = "."
     istio_base_name              = "../module/istio_flagger"
     istio_base_repo              = "https://istio-release.storage.googleapis.com/charts"
@@ -205,4 +205,4 @@ module "elk_stack" {
     flagger_loadtester_chart     = "loadtester"
     loadtester_version           = "0.28.1"
   
-}*/
+}
